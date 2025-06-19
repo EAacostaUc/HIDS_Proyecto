@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de eventos del sistema</title>
+</head>
+<body>
+    <h1>Registro de eventos del sistema</h1>
+    <ul>
+        {% for linea in eventos %}
+            <li>{{ linea }}</li>
+        {% empty %}
+            <li>No hay eventos registrados.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

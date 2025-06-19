@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Integridad de Archivos</title>
+</head>
+<body>
+    <h1>Monitoreo de Integridad de Archivos</h1>
+    <ul>
+        {% for evento in eventos %}
+            <li>{{ evento }}</li>
+        {% empty %}
+            <li>No se han detectado cambios.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

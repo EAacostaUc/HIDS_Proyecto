@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historial de eventos en archivos</title>
+</head>
+<body>
+    <h1>Historial de eventos en archivos del sistema</h1>
+    <ul>
+        {% for linea in eventos %}
+            <li>{{ linea }}</li>
+        {% empty %}
+            <li>No se han registrado eventos aún.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

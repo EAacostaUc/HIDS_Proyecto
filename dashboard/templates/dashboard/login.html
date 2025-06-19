@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        /* Centrar todo vertical y horizontalmente con Flexbox */
+        body {
+            display: flex;
+            justify-content: center;  /* Centrado horizontal */
+            align-items: center;      /* Centrado vertical */
+            height: 100vh;            /* Altura total de la ventana */
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: sans-serif;
+        }
+
+        /* Caja del formulario */
+        .login-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        /* Encabezado */
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Botón de enviar */
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Entrar">
+        </form>
+    </div>
+
+</body>
+</html>
+

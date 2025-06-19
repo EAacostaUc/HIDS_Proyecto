@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitoreo de Configuración</title>
+</head>
+<body>
+    <h1>Eventos de configuración del sistema</h1>
+    <ul>
+        {% for linea in eventos %}
+            <li>{{ linea }}</li>
+        {% empty %}
+            <li>No se han detectado eventos aún.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+

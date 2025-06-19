@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitoreo de Archivos</title>
+</head>
+<body>
+    <h1>Cambios recientes en archivos del sistema</h1>
+
+    <form action="{% url 'eventos_archivos' %}">
+        <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Ver eventos registrados
+        </button>
+    </form>
+
+    <br>
+
+    <ul>
+        {% for e in eventos %}
+            <li>{{ e }}</li>
+        {% empty %}
+            <li>No se detectaron cambios durante el período de observación.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+

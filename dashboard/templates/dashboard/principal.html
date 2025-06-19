@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard HIDS</title>
+
+    <!--para centrar el contenido en pantalla y dar estilo visual -->
+    <style>
+        /* Establece un sistema de diseño tipo "flex" (flexbox) para centrar contenido */
+        body {
+            display: flex;
+            justify-content: center;     /* Centrado horizontal */
+            align-items: center;         /* Centrado vertical */
+            height: 100vh;               /* Usa toda la altura de la ventana */
+            margin: 0;                   /* Elimina márgenes por defecto */
+            background-color: #f0f0f0;   /* Color de fondo suave, coloca color gris al fondo */
+            font-family: Arial, sans-serif; /* fuente usada para las palabras */
+        }
+
+        /* Contenedor del contenido principal, el recuadro que aparece en el medio de la pagina */
+        .contenedor {
+            background: white;            /* Fondo blanco para destacar */
+            padding: 30px;                /* Espaciado interno */
+            border-radius: 10px;          /* Bordes redondeados */
+            text-align: center;           /* Centrado del texto */
+            box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra suave alrededor del recuadro, para resaltar mas */
+        }
+
+        h1 {
+            margin-top: 0;                /* Elimina margen superior extra */
+        }
+
+        /* Quita los puntos de las listas */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Espaciado entre los elementos de la lista */
+        li {
+            margin: 10px 0;
+        }
+
+        /* para los enlaces y botones */
+        a, button {
+            text-decoration: none;        /* Quita el subrayado de los links, para que se vea mas agradable */
+            color: white;                 /* Texto blanco */
+            background-color: #007BFF;    /* Azul, para los botones */
+            padding: 10px 15px;           /* Espaciado interno del botón */
+            border: none;                 /* Quita bordes */
+            border-radius: 5px;           /* Bordes redondeados */
+            display: inline-block;        /* Para que los elementos estén en línea */
+        }
+
+        /* resaltar cuando pasas el mouse por los enlaces o botones */
+        a:hover, button:hover {
+            background-color: #0056b3;    /* azul mas oscuro al pasar el mouse */
+        }
+
+        /* El boton debe tener comportamiento de clic */
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- cuerpo principal, donde se coloca las URLs de las paginas para al darle 'click' que sea redirigido -->
+
+    <!-- Contenedor centrado del contenido del dashboard -->
+    <div class="contenedor">
+        <h1>Bienvenido al Sistema HIDS</h1>
+        <p>Selecciona un módulo:</p>
+
+        <!-- Lista de enlaces a los distintos módulos del sistema -->
+        <ul>
+            <!-- Redirige a la vista que muestra procesos sospechosos -->
+            <li><a href="{% url 'ver_procesos' %}">Monitoreo de procesos</a></li>
+
+            <!-- Redirige a la vista que monitorea archivos modificados -->
+            <li><a href="{% url 'ver_archivos' %}">Monitoreo del sistema de archivos</a></li>
+
+            <!-- redirige a la vista que monitorea la configuracion del sistema -->
+            <li><a href="{% url 'ver_configuracion' %}">Monitoreo de configuración del sistema</a></li>
+
+            <!-- redirige a la vista que monitorea la integridad de archivos criticos -->
+            <li><a href="{% url 'ver_integridad' %}">Monitoreo de Integridad de Archivos</a></li>
+
+            <!--redirige a la vista que registra eventos del sistema -->
+            <li><a href="{% url 'ver_eventos_sistema' %}">Registro de eventos del sistema</a></li>
+
+
+            <!-- Formulario de cierre de sesión (logout) con protección CSRF -->
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+
