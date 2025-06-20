@@ -10,3 +10,11 @@
 [2025-06-18 12:25:12] MODIFICADO: /etc/ssh/sshd_config
 [2025-06-18 12:30:07] MODIFICADO: /etc/ssh/sshd_config
 [2025-06-19 02:00:20] MODIFICADO: /etc/ssh/sshd_config
+[2025-06-20 15:25:16] Puertos abiertos detectados: 22, 53, 546, 68, 8000
+[2025-06-20 15:26:20] MODIFICADO: /etc/ufw/ufw.conf
+[2025-06-20 15:26:20] Puertos abiertos detectados: 22, 53, 546, 68, 8000
+[2025-06-20 15:36:05] Puertos abiertos detectados: 22, 53, 546, 68, 8000
+[2025-06-20 15:37:38] Puertos abiertos detectados: 22, 53, 546, 68, 8000
+[2025-06-20 15:38:13] MODIFICADO: /etc/ufw/ufw.conf
+[2025-06-20 15:38:13] Puertos abiertos detectados: 22, 53, 546, 68, 8000
+[2025-06-20 16:06:52] Puertos abiertos detectados: 22, 53, 546, 68, 8000

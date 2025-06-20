@@ -1,7 +1,0 @@
-2025-06-19T02:08:02.328173-03:00 Proyecto-HIDS sudo: pam_unix(sudo:session): session closed for user root
-2025-06-19T02:08:16.705383-03:00 Proyecto-HIDS sshd[1387]: pam_unix(sshd:session): session closed for user ariel_acosta
-2025-06-19T02:08:44.122989-03:00 Proyecto-HIDS sshd[1460]: Failed password for invalid user acosta_veron from 192.168.0.105 port 53380 ssh2
-2025-06-19T02:09:06.712839-03:00 Proyecto-HIDS sshd[1463]: Failed password for ariel_acosta from 192.168.0.105 port 53381 ssh2
-2025-06-19T02:09:40.607622-03:00 Proyecto-HIDS sshd[1463]: message repeated 2 times: [ Failed password for ariel_acosta from 192.168.0.105 port 53381 ssh2]
-2025-06-19T02:10:06.705255-03:00 Proyecto-HIDS sshd[1463]: Accepted password for ariel_acosta from 192.168.0.105 port 53381 ssh2
-2025-06-19T02:10:36.062541-03:00 Proyecto-HIDS sshd[1463]: pam_unix(sshd:session): session closed for user ariel_acosta

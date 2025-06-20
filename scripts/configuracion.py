@@ -10,6 +10,8 @@ import hashlib  # esto es para generar sha-256 (un hash criptografico), para el 
 import os   # esto es para verificar si el archivo existe
 import datetime   # solo para mostrar con mas detalle los movimientos sospechosos
 import time
+import subprocess  # para la deteccion de puertos abiertos...
+
 from django.core.mail import send_mail  # para correo
 
 from django.conf import settings   # para acceder a configuraciones de Django
@@ -73,22 +75,61 @@ def registrar_en_log(archivo):
     """
     ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_PATH, "a") as log:   # se va agregando nuevos eventos sin borrar los anteriores por eso se usa "a"
-        log.write(f"[{ahora}] ⚠️ MODIFICADO: {archivo}\n")
+        log.write(f"[{ahora}] MODIFICADO: {archivo}\n")
 
 
-# funcion encargado de hacer los envios de laertas al correo...
-def enviar_alerta(archivo):
+# funcion encargado de hacer los envios de las alertas al correo...
+def enviar_alerta(archivo, opcion):
     """
     Envía una alerta por correo si el archivo fue modificado.
     """
-    mensaje = f"ALERTA: Se detectó una modificación en el archivo crítico: {archivo}"
+    if opcion == 1:  # cuando se modifican los archivos criticos
+    	mensaje = f"ALERTA: Se detectó una modificación en el archivo crítico: {archivo}"
+    elif opcion == 0: # para mostrar puertos abiertos
+    	mensaje = f"ALERTA: {archivo}"
+
     send_mail(
-        subject="Alerta HIDS - Configuración Modificada",
+        subject="Alerta HIDS - Configuración Modificada/Puertos abiertos",
         message=mensaje,
         from_email=None,
         recipient_list=[settings.ALERTA_EMAIL_RECEPTOR],
         fail_silently=False
     )
+
+
+
+
+# funcion para detectar puertos abiertos
+def registrar_puertos_abiertos():
+    ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    resultado = subprocess.check_output(['ss', '-tuln']).decode()  # utilizamos el comando 'ss -tuln'
+
+    puertos_abiertos = set()  # para almacenar los puertos detectados con 'set()' se envitan los puertos duplicados, ej: puerto '53' duplicados
+
+    for linea in resultado.splitlines()[1:]:  # omitimos la cabecera que se muestra al usar 'ss -tuln', bajamos una linea
+        partes = linea.split() # cargamos cada linea en 'partes' y usando 'split()' los separamos por comas
+        if len(partes) >= 5:   # aseguramos de que haya 5 o mas columnas (en la 5ta columna esta lo que queremos)
+            direccion = partes[4]  # la columna de "Local Address:Port"
+            if ':' in direccion:   # revisamos si hay ':' en la cadena 'direccion'
+                puerto = direccion.split(':')[-1]   # si hay, cargamos en puerto solo lo que esta despues de ':', que seria el puerto
+                if puerto.isdigit():  # verificamos que lo que se extrajo sea solo numero (digitos)
+                    puertos_abiertos.add(puerto)  # cargamos en 'puertos_abiertos' el puerto encontrado, si hay puertos repetidos, no se vuelve a cargar
+                    # en 'puertos_abiertos'
+
+    if puertos_abiertos:
+        contenido = f"[{ahora}] Puertos abiertos detectados: {', '.join(sorted(puertos_abiertos))}\n"
+    else:
+        contenido = f"[{ahora}] No se detectaron puertos abiertos.\n"
+
+    with open(LOG_PATH, "a") as log:
+        log.write(contenido)
+
+    # enviamos alerta por correo
+    enviar_alerta(contenido, 0)
+
+
+
+
 
 
 # funcion principal encargado de hacer el monitoreo
@@ -105,13 +146,18 @@ def verificar_configuracion():
 
         if archivo in hashes_previos:   # el archivo si tiene su hash anterior, antes de la modificacion
             if hashes_previos[archivo] != hash_actual:    # se compara el hash actual con el hash anterior, y si son distintos, hubo modificacion
-                enviar_alerta(archivo)   # se envia la alerta
+                enviar_alerta(archivo, 1)   # se envia la alerta, colocamos opcion 1 para mostrar un mensaje diferente...
                 registrar_en_log(archivo)  # se registra el evento en el .log
         else:
             # Si es la primera vez, no se alerta
             print(f"[INFO] Registrando por primera vez: {archivo}")
 
     guardar_hashes_actuales(hashes_actuales)  # despues de jejcutar toda la funcion, se sobreescribe los hashes anteriores por los hashes actuales, y asi sucecivamente...
+    registrar_puertos_abiertos()   # llamamos la funcion, para mostrar lo puertos abiertos
+
+
+
+
 
 
 

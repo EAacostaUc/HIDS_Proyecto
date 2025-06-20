@@ -70,7 +70,7 @@ def registrar_en_log(archivo):
     """
     ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_PATH, "a") as f:  # se va agregando nuevos eventos sin borrar los anteriores por eso se usa "a"
-        f.write(f"[{ahora}] ⚠️ Integridad comprometida en: {archivo}\n")
+        f.write(f"[{ahora}] Integridad comprometida en: {archivo}\n")
 
 # funcion encargado de hacer los envios de laertas al correo...
 def enviar_alerta(archivo):
